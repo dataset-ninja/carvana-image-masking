@@ -1,5 +1,3 @@
+**The Carvana Image Masking Dataset**, presented as part of a computer vision challenge on the Kaggle platform, offered a unique opportunity for participants to tackle complex image segmentation tasks. Provided by [Carvana](https://www.carvana.com/), an online car retail company, this dataset consisted of high-resolution car images. The challenge tasked participants with the development of algorithms capable of automatically and precisely identifying cars within these images and generating pixel-level masks to outline the cars' shapes.
 
-Sample image template:
-<img src="https://github.com/dataset-ninja/gland-segmentation/assets/78355358/f158d0dd-71d5-41a2-aba5-4a5f57d54c35" alt="image" width="800">
-
-<span style="font-size: smaller; font-style: italic;">Image description.</span>
+This dataset contains a large number of car images (as .jpg files). Each car has exactly 16 images, each one taken at different angles. Each car has a unique id and images are named according to id_01.jpg, id_02.jpg … id_16.jpg. In addition to the images, you are also provided some basic metadata about the car make, model, year, and trim.
