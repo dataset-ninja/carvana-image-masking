@@ -70,16 +70,70 @@ def convert_and_upload_supervisely_project(
     api: sly.Api, workspace_id: int, project_name: str
 ) -> sly.ProjectInfo:
     ### Function should read local dataset and upload it to Supervisely project, then return project info.###
-    raise NotImplementedError("The converter should be implemented manually.")
 
-    # dataset_path = "/local/path/to/your/dataset" # general way
-    # dataset_path = download_dataset(teamfiles_dir) # for large datasets stored on instance
+    batch_size = 30
 
-    # ... some code here ...
+    dataset_path = "Carvana Image Masking"
+    images_folder = "train_images"
+    masks_folder = "train_masks"
+    images_ext = ".jpg"
+    masks_ext = ".png"
+    ds_name = "train"
+    group_tag_name = "car_id"
 
-    # sly.logger.info('Deleting temporary app storage files...')
-    # shutil.rmtree(storage_dir)
 
-    # return project
+    def create_ann(image_path):
+        labels = []
+
+        image_name = get_file_name(image_path)
+        id_data = image_name.split("_")[0]
+        group_id = sly.Tag(tag_id, value=id_data)
+        mask_name = image_name + masks_ext
+        mask_path = os.path.join(masks_path, mask_name)
+        mask_np = sly.imaging.image.read(mask_path)[:, :, 0]
+        img_height = mask_np.shape[0]
+        img_wight = mask_np.shape[1]
+        mask = mask_np == 1
+        ret, curr_mask = connectedComponents(mask.astype("uint8"), connectivity=8)
+        for i in range(1, ret):
+            obj_mask = curr_mask == i
+            curr_bitmap = sly.Bitmap(obj_mask)
+            if curr_bitmap.area > 200:
+                curr_label = sly.Label(curr_bitmap, obj_class)
+                labels.append(curr_label)
+
+        return sly.Annotation(img_size=(img_height, img_wight), labels=labels, img_tags=[group_id])
 
 
+    obj_class = sly.ObjClass("car", sly.Bitmap)
+
+    tag_id = sly.TagMeta("car_id", sly.TagValueType.ANY_STRING)
+    group_tag_meta = sly.TagMeta(group_tag_name, sly.TagValueType.ANY_STRING)
+
+    project = api.project.create(workspace_id, project_name, change_name_if_conflict=True)
+    meta = sly.ProjectMeta(obj_classes=[obj_class])
+    meta = meta.add_tag_meta(group_tag_meta)
+    api.project.update_meta(project.id, meta.to_json())
+    api.project.images_grouping(id=project.id, enable=True, tag_name=group_tag_name)
+
+
+    dataset = api.dataset.create(project.id, ds_name.lower(), change_name_if_conflict=True)
+    images_path = os.path.join(dataset_path, images_folder)
+    masks_path = os.path.join(dataset_path, masks_folder)
+
+    images_names = os.listdir(images_path)
+
+    progress = sly.Progress("Create dataset {}".format(ds_name), len(images_names))
+
+    for img_names_batch in sly.batched(images_names, batch_size=batch_size):
+        images_pathes_batch = [os.path.join(images_path, image_name) for image_name in img_names_batch]
+
+        img_infos = api.image.upload_paths(dataset.id, img_names_batch, images_pathes_batch)
+        img_ids = [im_info.id for im_info in img_infos]
+
+        anns_batch = [create_ann(image_path) for image_path in images_pathes_batch]
+        api.annotation.upload_anns(img_ids, anns_batch)
+
+        progress.iters_done_report(len(img_names_batch))
+    
+    return project
