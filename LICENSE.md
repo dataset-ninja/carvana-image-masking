@@ -1,0 +1,1 @@
+License is unknown for the Carvana Image Masking 2017 dataset.
