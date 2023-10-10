@@ -2,6 +2,6 @@
 
 The dataset consists of 105152 images with 5088 labeled objects belonging to 1 single class (*car*).
 
-Images in the Carvana Image Masking 2017 dataset have pixel-level semantic segmentation annotations. There are 100064 (95% of the total) unlabeled images (i.e. without annotations). There are 2 splits in the dataset: *test* (100064 images) and *train* (5088 images). The dataset was released in 2017 by the Carvana.
+Images in the Carvana Image Masking 2017 dataset have pixel-level semantic segmentation annotations. There are 100064 (95% of the total) unlabeled images (i.e. without annotations). There are 2 splits in the dataset: *test* (100064 images) and *train* (5088 images). Also, the dataset contains car ***make***, ***model***, ***year***, ***trim*** tags. The dataset was released in 2017 by the Carvana.
 
 <img src="https://github.com/dataset-ninja/carvana-image-masking/raw/main/visualizations/poster.png">
