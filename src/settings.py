@@ -20,7 +20,10 @@ HIDE_DATASET = True  # set False when 100% sure about repo quality
 ##################################
 # * After uploading to instance ##
 ##################################
-LICENSE: License = License.Custom(url="https://www.kaggle.com/competitions/carvana-image-masking-challenge/rules", redistributable=False)
+LICENSE: License = License.Custom(
+    url="https://www.kaggle.com/competitions/carvana-image-masking-challenge/rules",
+    redistributable=False,
+)
 APPLICATIONS: List[Union[Industry, Domain, Research]] = [Industry.Retail()]
 CATEGORY: Category = Category.Retail()
 
