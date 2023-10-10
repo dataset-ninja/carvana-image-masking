@@ -31,7 +31,9 @@ RELEASE_DATE: Optional[str] = None  # e.g. "YYYY-MM-DD"
 if RELEASE_DATE is None:
     RELEASE_YEAR: int = 2017
 
-HOMEPAGE_URL: str = "https://www.kaggle.com/competitions/carvana-image-masking-challenge/"
+HOMEPAGE_URL: str = (
+    "https://www.kaggle.com/competitions/carvana-image-masking-challenge/"
+)
 # e.g. "https://some.com/dataset/homepage"
 
 PREVIEW_IMAGE_ID: int = 6995402
@@ -43,7 +45,9 @@ GITHUB_URL: str = "https://github.com/dataset-ninja/carvana-image-masking"
 ##################################
 ### * Optional after uploading ###
 ##################################
-DOWNLOAD_ORIGINAL_URL: Optional[Union[str, dict]] = "https://www.kaggle.com/competitions/carvana-image-masking-challenge/data"
+DOWNLOAD_ORIGINAL_URL: Optional[
+    Union[str, dict]
+] = "https://www.kaggle.com/competitions/carvana-image-masking-challenge/data"
 # Optional link for downloading original dataset (e.g. "https://some.com/dataset/download")
 
 CLASS2COLOR: Optional[Dict[str, List[str]]] = None
@@ -55,8 +59,17 @@ PAPER: Optional[Union[str, List[str], Dict[str, str]]] = None
 BLOGPOST: Optional[Union[str, List[str], Dict[str, str]]] = None
 REPOSITORY: Optional[Union[str, List[str], Dict[str, str]]] = None
 
-CITATION_URL: Optional[str] = "https://www.kaggle.com/competitions/carvana-image-masking-challenge/"
-AUTHORS: Optional[List[str]] = ["Brian Shaler", "DanGill McDonald", "Maggie McDonald", "Mark McDonald", "Patricia Cukierski"," Will Cukierski"]
+CITATION_URL: Optional[
+    str
+] = "https://www.kaggle.com/competitions/carvana-image-masking-challenge/"
+AUTHORS: Optional[List[str]] = [
+    "Brian Shaler",
+    "DanGill McDonald",
+    "Maggie McDonald",
+    "Mark McDonald",
+    "Patricia Cukierski",
+    " Will Cukierski",
+]
 
 ORGANIZATION_NAME: Optional[Union[str, List[str]]] = ["Carvana"]
 ORGANIZATION_URL: Optional[Union[str, List[str]]] = ["https://www.carvana.com/"]
@@ -76,7 +89,9 @@ SECTION_EXPLORE_CUSTOM_DATASETS: Optional[List[str]] = None
 def check_names():
     fields_before_upload = [PROJECT_NAME]  # PROJECT_NAME_FULL
     if any([field is None for field in fields_before_upload]):
-        raise ValueError("Please fill all fields in settings.py before uploading to instance.")
+        raise ValueError(
+            "Please fill all fields in settings.py before uploading to instance."
+        )
 
 
 def get_settings():
@@ -100,7 +115,9 @@ def get_settings():
     }
 
     if any([field is None for field in settings.values()]):
-        raise ValueError("Please fill all fields in settings.py after uploading to instance.")
+        raise ValueError(
+            "Please fill all fields in settings.py after uploading to instance."
+        )
 
     settings["release_date"] = RELEASE_DATE
     settings["download_original_url"] = DOWNLOAD_ORIGINAL_URL
