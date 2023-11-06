@@ -71,8 +71,9 @@ AUTHORS: Optional[List[str]] = [
     "Maggie McDonald",
     "Mark McDonald",
     "Patricia Cukierski",
-    " Will Cukierski",
+    "Will Cukierski",
 ]
+AUTHORS_CONTACTS: Optional[List[str]] = ["https://medium.com/@brianshaler/about", "https://www.kaggle.com/wcukierski"]
 
 ORGANIZATION_NAME: Optional[Union[str, List[str]]] = ["Carvana"]
 ORGANIZATION_URL: Optional[Union[str, List[str]]] = ["https://www.carvana.com/"]
@@ -130,6 +131,7 @@ def get_settings():
     settings["repository"] = REPOSITORY
     settings["citation_url"] = CITATION_URL
     settings["authors"] = AUTHORS
+    settings["authors_contacts"] = AUTHORS_CONTACTS
     settings["organization_name"] = ORGANIZATION_NAME
     settings["organization_url"] = ORGANIZATION_URL
     settings["slytagsplit"] = SLYTAGSPLIT
